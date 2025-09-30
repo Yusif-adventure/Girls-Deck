@@ -15,10 +15,11 @@ const RecordPage = () => {
 
   const handleRegionBlur = async () => {
     if (region) {
-      const res = await fetch(`http://localhost:3001/api/agents?region=${region}`);
-      const data = await res.json();
-      setAgents(data.agents);
-      setSelectedAgent('');
+  const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
+  const res = await fetch(`${apiBaseUrl}/api/agents?region=${region}`);
+  const data = await res.json();
+  setAgents(data.agents);
+  setSelectedAgent('');
     }
   };
 
@@ -51,7 +52,8 @@ const RecordPage = () => {
     formData.append('audio', blob, 'recording.webm');
     formData.append('channel', channel);
     formData.append('agentContact', channel === 'whatsapp' ? selectedAgent.whatsapp : selectedAgent.telegram);
-    await fetch('http://localhost:3001/api/audio', {
+    const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
+    await fetch(`${apiBaseUrl}/api/audio`, {
       method: 'POST',
       body: formData,
     });

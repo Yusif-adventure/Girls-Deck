@@ -25,20 +25,27 @@ const ContactPage = () => {
     ]
   };
 
+  const getApiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
   const getLocation = () => {
     setIsLoadingLocation(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          // Simulate mapping coordinates to region
-          const regions = ['Greater Accra', 'Ashanti', 'Northern'];
-          const randomRegion = regions[Math.floor(Math.random() * regions.length)];
-          
-          setTimeout(() => {
-            setLocation(randomRegion);
-            setAgents(mockAgents[randomRegion] || []);
-            setIsLoadingLocation(false);
-          }, 1500);
+        async (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setLocation(`Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`);
+          try {
+            const res = await fetch(`${getApiBaseUrl}/api/nearest-agents`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ lat, lng })
+            });
+            const data = await res.json();
+            setAgents(data.agents || []);
+          } catch (err) {
+            alert('Failed to fetch agents from server.');
+          }
+          setIsLoadingLocation(false);
         },
         (error) => {
           console.error('Location error:', error);

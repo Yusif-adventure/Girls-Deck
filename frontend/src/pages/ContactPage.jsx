@@ -191,7 +191,7 @@ const ContactPage = () => {
               {agents.length === 0 ? (
                 <div className="p-3 text-center text-muted">No officers found near your location.</div>
               ) : (
-                agents.map(agent => (
+                agents.map((agent, idx) => (
                   <div
                     key={agent.phone}
                     className="p-3 border-bottom cursor-pointer hover-bg-light"
@@ -202,13 +202,17 @@ const ContactPage = () => {
                   >
                     <div className="d-flex align-items-center">
                       <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
-                        style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)' }}>
-                        <User size={24} className="text-primary" />
+                        style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
+                        <img
+                          src={`https://randomuser.me/api/portraits/men/${(idx % 100) + 1}.jpg`}
+                          alt="Agent"
+                          style={{ width: '48px', height: '48px', objectFit: 'cover' }}
+                        />
                       </div>
                       <div className="flex-grow-1">
                         <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{agent.name}</div>
                         <div className="text-muted" style={{ fontSize: '11px' }}>
-                          Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
+                          {agent.place ? agent.place + ' • ' : ''}Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
                         </div>
                         <div className="d-flex align-items-center mt-1">
                           <span className="badge bg-success me-2" style={{ fontSize: '9px' }}>Online</span>
@@ -264,12 +268,15 @@ const ContactPage = () => {
             <div className="modal-content border-0 shadow">
               <div className="modal-body p-4 text-center">
                 <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
-                     style={{ width: '64px', height: '64px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)' }}>
-                  <User size={32} className="text-primary" />
+                     style={{ width: '64px', height: '64px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
+                  <img
+                    src={`https://randomuser.me/api/portraits/men/${(agents.findIndex(a => a.phone === selectedAgent.phone) % 100) + 1}.jpg`}
+                    alt="Agent"
+                    style={{ width: '64px', height: '64px', objectFit: 'cover' }}
+                  />
                 </div>
                 <h6 className="fw-bold mb-1">{selectedAgent.name}</h6>
-                <p className="text-muted small mb-4">{selectedAgent.region} Region</p>
-                
+                <p className="text-muted small mb-4">{selectedAgent.place ? selectedAgent.place : selectedAgent.region + ' Region'}</p>
                 <div className="d-grid gap-2">
                   <button 
                     className="btn btn-success d-flex align-items-center justify-content-center"

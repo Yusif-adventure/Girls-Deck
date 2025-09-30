@@ -11,12 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Multer setup for audio uploads
 const upload = multer({ dest: 'uploads/' });
-
+const checking="checking status of server";
 // Dummy agent data by region
 const agents = {
   'Accra': [{ name: 'Agent A', phone: '+2331111111', whatsapp: '2331111111', telegram: 'agentA_telegram' }],
   'Kumasi': [{ name: 'Agent B', phone: '+2332222222', whatsapp: '2332222222', telegram: 'agentB_telegram' }],
 };
+console.log (checking);
 
 
 // Required for WhatsApp/Telegram integration
@@ -45,3 +46,45 @@ async function sendTelegramMessage(chatId, message) {
   //   text: message,
   // });
 }
+
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
+
+// Agents with coordinates (example data)
+const agentsWithCoords = [
+  { name: 'Agent A', phone: '+2331111111', whatsapp: '2331111111', telegram: 'agentA_telegram', lat: 5.6037, lng: -0.1870 }, // Accra
+  { name: 'Agent B', phone: '+2332222222', whatsapp: '2332222222', telegram: 'agentB_telegram', lat: 6.6885, lng: -1.6244 }, // Kumasi
+  { name: 'Agent C', phone: '+2333333333', whatsapp: '2333333333', telegram: 'agentC_telegram', lat: 9.4008, lng: -0.8393 }, // Tamale
+  { name: 'Agent D', phone: '+2334444444', whatsapp: '2334444444', telegram: 'agentD_telegram', lat: 7.5610, lng: -0.2554 }, // Koforidua
+];
+
+// Haversine formula to calculate distance between two lat/lng points (in km)
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    0.5 - Math.cos(dLat)/2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    (1 - Math.cos(dLon))/2;
+  return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+app.post('/api/nearest-agents', (req, res) => {
+  const { lat, lng } = req.body;
+  if (typeof lat !== 'number' || typeof lng !== 'number') {
+    return res.status(400).json({ error: 'lat and lng required as numbers' });
+  }
+  const agentsSorted = agentsWithCoords
+    .map(agent => ({
+      ...agent,
+      distance: getDistanceFromLatLonInKm(lat, lng, agent.lat, agent.lng)
+    }))
+    .sort((a, b) => a.distance - b.distance);
+  res.json({ agents: agentsSorted });
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});

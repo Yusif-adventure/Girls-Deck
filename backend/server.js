@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const app = express();
 const port = 3001;
 
@@ -22,7 +23,6 @@ console.log (checking);
 
 // Required for WhatsApp/Telegram integration
 // const twilio = require('twilio');
-// const axios = require('axios');
 // const { SpeechClient } = require('@google-cloud/speech');
 
 // TODO: Insert your credentials below
@@ -71,18 +71,41 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.asin(Math.sqrt(a));
 }
 
-app.post('/api/nearest-agents', (req, res) => {
+app.post('/api/nearest-agents', async (req, res) => {
   const { lat, lng } = req.body;
   if (typeof lat !== 'number' || typeof lng !== 'number') {
     return res.status(400).json({ error: 'lat and lng required as numbers' });
   }
+
+  // Reverse geocode using OpenStreetMap Nominatim
+  let place = '';
+  try {
+    const geoRes = await axios.get('https://nominatim.openstreetmap.org/reverse', {
+      params: {
+        lat,
+        lon: lng,
+        format: 'json',
+        addressdetails: 1
+      },
+      headers: {
+        'User-Agent': 'GirlsDeckApp/1.0 (your-email@example.com)'
+      }
+    });
+    if (geoRes.data && geoRes.data.address) {
+      const addr = geoRes.data.address;
+      place = addr.city || addr.town || addr.village || addr.hamlet || addr.county || addr.state || addr.country || '';
+    }
+  } catch (e) {
+    place = '';
+  }
+
   const agentsSorted = agentsWithCoords
     .map(agent => ({
       ...agent,
       distance: getDistanceFromLatLonInKm(lat, lng, agent.lat, agent.lng)
     }))
     .sort((a, b) => a.distance - b.distance);
-  res.json({ agents: agentsSorted });
+  res.json({ place, agents: agentsSorted });
 });
 
 app.listen(port, () => {

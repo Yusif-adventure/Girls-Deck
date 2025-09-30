@@ -5,6 +5,7 @@ import getApiBaseUrl from '../apiBaseUrl';
 
 const ContactPage = () => {
   const [location, setLocation] = useState(null);
+  const [place, setPlace] = useState('');
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -44,6 +45,7 @@ const ContactPage = () => {
             });
             const data = await res.json();
             setAgents(data.agents || []);
+            setPlace(data.place || '');
           } catch (err) {
             alert('Failed to fetch agents from server.');
           }
@@ -129,7 +131,7 @@ const ContactPage = () => {
             ) : (
               <div className="text-success small">
                 <i className="bi bi-check-circle-fill me-1"></i>
-                Location found: {location}
+                Location found: {place ? place : location}
               </div>
             )}
           </div>
@@ -182,7 +184,7 @@ const ContactPage = () => {
         {location && (
           <div className="card border-0 shadow-sm mb-3">
             <div className="card-header bg-white border-bottom p-3">
-              <h6 className="mb-1 fw-bold">Nearest Officers</h6>
+              <h6 className="mb-1 fw-bold">Nearest Officers {place && (<span>in {place}</span>)}</h6>
               <small className="text-muted">Tap to contact an officer immediately</small>
             </div>
             <div className="card-body p-0">

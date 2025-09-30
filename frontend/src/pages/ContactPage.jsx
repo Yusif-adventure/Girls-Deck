@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import { ArrowLeft, MapPin, User, Phone, MessageCircle, Navigation } from 'lucide-react';
+import getApiBaseUrl from '../apiBaseUrl';
 
 const ContactPage = () => {
   const [location, setLocation] = useState(null);
@@ -25,7 +27,6 @@ const ContactPage = () => {
     ]
   };
 
-  const getApiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
   const getLocation = () => {
     setIsLoadingLocation(true);
     if (navigator.geolocation) {
@@ -34,8 +35,9 @@ const ContactPage = () => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
           setLocation(`Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`);
+          const apiBaseUrl = getApiBaseUrl();
           try {
-            const res = await fetch(`${getApiBaseUrl}/api/nearest-agents`, {
+            const res = await fetch(`${apiBaseUrl}/api/nearest-agents`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ lat, lng })
@@ -177,42 +179,45 @@ const ContactPage = () => {
         </div>
 
         {/* Agents List */}
-        {location && agents.length > 0 && (
+        {location && (
           <div className="card border-0 shadow-sm mb-3">
             <div className="card-header bg-white border-bottom p-3">
-              <h6 className="mb-1 fw-bold">Available Officers in {location}</h6>
+              <h6 className="mb-1 fw-bold">Nearest Officers</h6>
               <small className="text-muted">Tap to contact an officer immediately</small>
             </div>
             <div className="card-body p-0">
-              {agents.map(agent => (
-                <div 
-                  key={agent.id} 
-                  className="p-3 border-bottom cursor-pointer hover-bg-light"
-                  onClick={() => handleAgentClick(agent)}
-                  style={{ cursor: 'pointer' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                >
-                  <div className="d-flex align-items-center">
-                    <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
-                         style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)' }}>
-                      <User size={24} className="text-primary" />
-                    </div>
-                    <div className="flex-grow-1">
-                      <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{agent.name}</div>
-                      <div className="text-muted" style={{ fontSize: '11px' }}>{agent.region} Region • Available Now</div>
-                      <div className="d-flex align-items-center mt-1">
-                        <span className={`badge ${agent.status === 'online' ? 'bg-success' : 'bg-secondary'} me-2`} 
-                              style={{ fontSize: '9px' }}>
-                          {agent.status === 'online' ? 'Online' : 'Offline'}
-                        </span>
-                        <span className="text-muted" style={{ fontSize: '10px' }}>Response time: ~5 min</span>
+              {agents.length === 0 ? (
+                <div className="p-3 text-center text-muted">No officers found near your location.</div>
+              ) : (
+                agents.map(agent => (
+                  <div
+                    key={agent.phone}
+                    className="p-3 border-bottom cursor-pointer hover-bg-light"
+                    onClick={() => handleAgentClick(agent)}
+                    style={{ cursor: 'pointer' }}
+                    onMouseEnter={e => e.target.style.backgroundColor = '#f8f9fa'}
+                    onMouseLeave={e => e.target.style.backgroundColor = 'transparent'}
+                  >
+                    <div className="d-flex align-items-center">
+                      <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
+                        style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)' }}>
+                        <User size={24} className="text-primary" />
                       </div>
+                      <div className="flex-grow-1">
+                        <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{agent.name}</div>
+                        <div className="text-muted" style={{ fontSize: '11px' }}>
+                          Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
+                        </div>
+                        <div className="d-flex align-items-center mt-1">
+                          <span className="badge bg-success me-2" style={{ fontSize: '9px' }}>Online</span>
+                          <span className="text-muted" style={{ fontSize: '10px' }}>Response time: ~5 min</span>
+                        </div>
+                      </div>
+                      <i className="bi bi-chevron-right text-muted"></i>
                     </div>
-                    <i className="bi bi-chevron-right text-muted"></i>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}

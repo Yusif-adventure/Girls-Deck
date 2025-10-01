@@ -9,7 +9,6 @@ const RecordPage = () => {
   const [sent, setSent] = useState(false);
   const [transcription, setTranscription] = useState('');
   const [sendResult, setSendResult] = useState('');
-  const [region, setRegion] = useState('');
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState('');
   const [channel, setChannel] = useState('whatsapp');

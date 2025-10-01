@@ -3,63 +3,17 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
 const port = 3001;
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const upload = multer({ dest: 'uploads/' });
 
 // Agents with coordinates (example data)
-
-
-// Return all agents (for audio page agent select)
-app.get('/api/agents', (req, res) => {
-  res.json({ agents: agentsWithCoords });
-});
-
-app.post('/api/audio', upload.single('audio'), async (req, res) => {
-  try {
-    const { channel, agentContact } = req.body;
-    if (!req.file) return res.status(400).json({ error: 'No audio file uploaded' });
-    const fs = require('fs');
-    const audioBytes = fs.readFileSync(req.file.path).toString('base64');
-    let transcription = '[Transcription would appear here if Google Speech-to-Text was configured]';
-    let sendResult = '';
-    if (channel === 'whatsapp') {
-      await sendWhatsAppMessage(agentContact, transcription);
-      sendResult = 'Sent to WhatsApp';
-    } else if (channel === 'telegram') {
-      await sendTelegramMessage(agentContact, transcription);
-      sendResult = 'Sent to Telegram';
-    }
-    fs.unlinkSync(req.file.path);
-    res.json({ success: true, transcription, sendResult });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to process audio' });
-  }
-});
-
-
-
-
-async function sendWhatsAppMessage(to, message) {
-}
-
-
-async function sendTelegramMessage(chatId, message) {
-}
-
-
-
-app.get('/', (req, res) => {
-  res.send('Backend is running!');
-});
-
 const agentsWithCoords = [
   { name: 'Agent A', phone: '+2331111111', whatsapp: '2331111111', telegram: 'agentA_telegram', lat: 5.6037, lng: -0.1870 }, // Accra
   { name: 'Agent B', phone: '+2332222222', whatsapp: '2332222222', telegram: 'agentB_telegram', lat: 6.6885, lng: -1.6244 }, // Kumasi
@@ -70,6 +24,29 @@ const agentsWithCoords = [
 // Return all agents (for audio page agent select)
 app.get('/api/agents', (req, res) => {
   res.json({ agents: agentsWithCoords });
+});
+
+app.post('/api/audio', upload.single('audio'), async (req, res) => {
+  try {
+    const { channel } = req.body;
+    if (!req.file) return res.status(400).json({ error: 'No audio file uploaded' });
+    const fs = require('fs');
+    let transcription = '[Transcription would appear here if Google Speech-to-Text was configured]';
+    let sendResult = '';
+    if (channel === 'whatsapp') {
+      sendResult = 'Sent to WhatsApp';
+    } else if (channel === 'telegram') {
+      sendResult = 'Sent to Telegram';
+    }
+    fs.unlinkSync(req.file.path);
+    res.json({ success: true, transcription, sendResult });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to process audio' });
+  }
+});
+
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
 });
 
 // Haversine formula to calculate distance between two lat/lng points (in km)

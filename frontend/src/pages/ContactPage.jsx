@@ -9,24 +9,7 @@ const ContactPage = () => {
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [chatType, setChatType] = useState(null);
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-
-  // Mock agents data
-  const mockAgents = {
-    'Greater Accra': [
-      { id: 1, name: 'Sarah Mitchell - Child Protection Officer', phone: '+233244567890', whatsapp: '+233244567890', telegram: 'sarah_cpo', region: 'Greater Accra', status: 'online' },
-      { id: 2, name: 'John Asante - Social Worker', phone: '+233209876543', whatsapp: '+233209876543', telegram: 'john_sw', region: 'Greater Accra', status: 'online' }
-    ],
-    'Ashanti': [
-      { id: 3, name: 'Mary Osei - Child Protection Officer', phone: '+233244123456', whatsapp: '+233244123456', telegram: 'mary_cpo', region: 'Ashanti', status: 'online' },
-      { id: 4, name: 'Peter Yeboah - Family Support Officer', phone: '+233209123456', whatsapp: '+233209123456', telegram: 'peter_fso', region: 'Ashanti', status: 'offline' }
-    ],
-    'Northern': [
-      { id: 5, name: 'Ibrahim Mohammed - Child Rights Officer', phone: '+233244654321', whatsapp: '+233244654321', telegram: 'ibrahim_cro', region: 'Northern', status: 'online' },
-      { id: 6, name: 'Fatima Abdul - Social Services Officer', phone: '+233209654321', whatsapp: '+233209654321', telegram: 'fatima_sso', region: 'Northern', status: 'online' }
-    ]
-  };
 
   const getLocation = () => {
     setIsLoadingLocation(true);
@@ -46,7 +29,7 @@ const ContactPage = () => {
             const data = await res.json();
             setAgents(data.agents || []);
             setPlace(data.place || '');
-          } catch (err) {
+          } catch {
             alert('Failed to fetch agents from server.');
           }
           setIsLoadingLocation(false);
@@ -74,7 +57,6 @@ const ContactPage = () => {
   };
 
   const handleChat = (type) => {
-    setChatType(type);
     if (type === 'whatsapp') {
       const message = 'Hello, I need to report a child marriage case through Girls Deck.';
       window.open(`https://wa.me/${selectedAgent.whatsapp.replace('+', '')}?text=${encodeURIComponent(message)}`);

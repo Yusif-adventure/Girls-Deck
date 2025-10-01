@@ -40,12 +40,12 @@ const HomePage = () => {
             } else {
               setError('No officers found near your location.');
             }
-          } catch (err) {
+          } catch {
             setError('Failed to fetch agent. Please try again.');
           }
           setLoading(false);
         },
-        (error) => {
+        () => {
           setLocationAllowed(false);
           setLoading(false);
           setError('Location access denied. Please allow location to connect you to help.');
@@ -78,18 +78,6 @@ const HomePage = () => {
     <div className="container-fluid p-0" style={{ maxWidth: 428, margin: '0 auto', background: '#f8f9fa', minHeight: '100vh' }}>
       <div className="bg-white shadow-sm border-bottom p-3 text-center">
         <h4 className="fw-bold mb-0">Girls Deck: Report Child Marriage</h4>
-      </div>
-      <div className="text-center mt-4">
-        <button className="btn btn-outline-secondary" onClick={() => setShowOther(v => !v)}>
-          {showOther ? 'Hide Other Options' : 'Other Options'}
-        </button>
-        {showOther && (
-          <div className="mt-3 d-flex flex-column gap-2 align-items-center">
-            <Link className="btn btn-outline-primary w-100" to="/form">Fill a Form</Link>
-            <Link className="btn btn-outline-primary w-100" to="/record">Send a Voice Message</Link>
-            <Link className="btn btn-outline-primary w-100" to="/contact">Contact Officers List</Link>
-          </div>
-        )}
       </div>
       <div className="p-4 text-center">
         <div className="mb-4">

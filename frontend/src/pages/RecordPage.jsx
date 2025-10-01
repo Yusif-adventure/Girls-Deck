@@ -1,4 +1,6 @@
+
 import React, { useRef, useState } from 'react';
+import getApiBaseUrl from '../apiBaseUrl';
 
 
 const RecordPage = () => {
@@ -18,7 +20,7 @@ const RecordPage = () => {
   // Always fetch all agents on mount
   React.useEffect(() => {
     const fetchAgents = async () => {
-      const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
+      const apiBaseUrl = getApiBaseUrl();
       const res = await fetch(`${apiBaseUrl}/api/agents`);
       const data = await res.json();
       setAgents(data.agents);
@@ -57,7 +59,7 @@ const RecordPage = () => {
     formData.append('audio', blob, 'recording.webm');
     formData.append('channel', channel);
     formData.append('agentContact', channel === 'whatsapp' ? selectedAgent.whatsapp : selectedAgent.telegram);
-    const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
+    const apiBaseUrl = getApiBaseUrl();
     const res = await fetch(`${apiBaseUrl}/api/audio`, {
       method: 'POST',
       body: formData,

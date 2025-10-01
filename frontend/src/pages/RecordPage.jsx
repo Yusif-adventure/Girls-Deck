@@ -5,6 +5,8 @@ const RecordPage = () => {
   const [recording, setRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const [sent, setSent] = useState(false);
+  const [transcription, setTranscription] = useState('');
+  const [sendResult, setSendResult] = useState('');
   const [region, setRegion] = useState('');
   const [agents, setAgents] = useState([]);
   const [selectedAgent, setSelectedAgent] = useState('');
@@ -47,16 +49,21 @@ const RecordPage = () => {
       return;
     }
     setError('');
+    setTranscription('');
+    setSendResult('');
     const blob = await fetch(audioUrl).then(r => r.blob());
     const formData = new FormData();
     formData.append('audio', blob, 'recording.webm');
     formData.append('channel', channel);
     formData.append('agentContact', channel === 'whatsapp' ? selectedAgent.whatsapp : selectedAgent.telegram);
     const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
-    await fetch(`${apiBaseUrl}/api/audio`, {
+    const res = await fetch(`${apiBaseUrl}/api/audio`, {
       method: 'POST',
       body: formData,
     });
+    const data = await res.json();
+    setTranscription(data.transcription || '');
+    setSendResult(data.sendResult || '');
     setSent(true);
   };
 
@@ -89,7 +96,20 @@ const RecordPage = () => {
       {recording && <button onClick={stopRecording}>⏹️ Stop</button>}
       {audioUrl && <audio src={audioUrl} controls />}
       {audioUrl && !sent && <button onClick={sendAudio}>📤 Send</button>}
-      {sent && <div>Audio sent to agent!</div>}
+      {sent && (
+        <div>
+          <div>Audio sent to agent!</div>
+          {transcription && (
+            <div style={{ marginTop: 10 }}>
+              <strong>Transcription:</strong>
+              <div style={{ background: '#f3f4f6', padding: 8, borderRadius: 4, marginTop: 4 }}>{transcription}</div>
+            </div>
+          )}
+          {sendResult && (
+            <div style={{ marginTop: 10, color: '#16a34a' }}>{sendResult}</div>
+          )}
+        </div>
+      )}
       {error && <div className="error">{error}</div>}
     </div>
   );

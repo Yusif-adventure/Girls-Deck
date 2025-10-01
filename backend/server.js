@@ -1,3 +1,48 @@
+// Uncomment and configure these for real transcription and messaging
+// const { SpeechClient } = require('@google-cloud/speech');
+// const speechClient = new SpeechClient({ keyFilename: 'path-to-google-credentials.json' });
+
+// POST /api/audio: Receive audio, transcribe, and send to agent
+app.post('/api/audio', upload.single('audio'), async (req, res) => {
+  try {
+    const { channel, agentContact } = req.body;
+    if (!req.file) return res.status(400).json({ error: 'No audio file uploaded' });
+    // Read audio file
+    const fs = require('fs');
+    const audioBytes = fs.readFileSync(req.file.path).toString('base64');
+
+    // Transcribe audio using Google Speech-to-Text
+    let transcription = '';
+    try {
+      // Uncomment for real transcription
+      // const [response] = await speechClient.recognize({
+      //   audio: { content: audioBytes },
+      //   config: { encoding: 'WEBM_OPUS', languageCode: 'en-US' },
+      // });
+      // transcription = response.results.map(r => r.alternatives[0].transcript).join(' ');
+      transcription = '[Transcription would appear here if Google Speech-to-Text was configured]';
+    } catch (err) {
+      transcription = '[Transcription failed or not configured]';
+    }
+
+    // Send transcription to agent via WhatsApp or Telegram
+    let sendResult = '';
+    if (channel === 'whatsapp') {
+      await sendWhatsAppMessage(agentContact, transcription);
+      sendResult = 'Sent to WhatsApp';
+    } else if (channel === 'telegram') {
+      await sendTelegramMessage(agentContact, transcription);
+      sendResult = 'Sent to Telegram';
+    }
+
+    // Clean up uploaded file
+    fs.unlinkSync(req.file.path);
+
+    res.json({ success: true, transcription, sendResult });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to process audio' });
+  }
+});
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');

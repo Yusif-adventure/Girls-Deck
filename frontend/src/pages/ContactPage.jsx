@@ -208,6 +208,15 @@ const ContactPage = () => {
                   ];
                   const realName = demoNames[idx % demoNames.length];
                   const realPosition = demoPositions[idx % demoPositions.length];
+                  // Generate a random success rate (3-5 stars)
+                  const starCount = 3 + (idx % 3); // 3, 4, or 5 stars
+                  const stars = Array.from({ length: 5 }, (_, i) =>
+                    i < starCount ? (
+                      <span key={i} style={{ color: '#fbbf24', fontSize: '14px' }}>&#9733;</span>
+                    ) : (
+                      <span key={i} style={{ color: '#e5e7eb', fontSize: '14px' }}>&#9733;</span>
+                    )
+                  );
                   return (
                     <div
                       key={agent.phone}
@@ -229,6 +238,7 @@ const ContactPage = () => {
                         <div className="flex-grow-1">
                           <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{realName}</div>
                           <div className="text-muted" style={{ fontSize: '11px' }}>{realPosition}</div>
+                          <div>{stars} <span className="text-muted" style={{ fontSize: '11px' }}>Success Rate</span></div>
                           <div className="text-muted" style={{ fontSize: '11px' }}>
                             {agent.place ? agent.place + ' • ' : ''}Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
                           </div>
@@ -319,6 +329,17 @@ const ContactPage = () => {
                     return demoPositions[idx % demoPositions.length];
                   })()
                 }</div>
+                <div>{(() => {
+                  const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
+                  const starCount = 3 + (idx % 3);
+                  return Array.from({ length: 5 }, (_, i) =>
+                    i < starCount ? (
+                      <span key={i} style={{ color: '#fbbf24', fontSize: '16px' }}>&#9733;</span>
+                    ) : (
+                      <span key={i} style={{ color: '#e5e7eb', fontSize: '16px' }}>&#9733;</span>
+                    )
+                  );
+                })()} <span className="text-muted" style={{ fontSize: '12px' }}>Success Rate</span></div>
                 <p className="text-muted small mb-4">{selectedAgent.place ? selectedAgent.place : selectedAgent.region + ' Region'}</p>
                 <div className="d-grid gap-2">
                   <button 

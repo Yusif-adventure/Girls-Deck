@@ -71,7 +71,7 @@ const RecordPage = () => {
   return (
     <div className="record-page">
       <h2>Record Audio</h2>
-      {agents.length > 0 && (
+      {agents.length > 0 ? (
         <>
           <label>Select Agent:</label>
           <select value={selectedAgent ? selectedAgent.phone : ''} onChange={e => setSelectedAgent(agents.find(a => a.phone === e.target.value))} required>
@@ -86,6 +86,10 @@ const RecordPage = () => {
             <option value="telegram">Telegram</option>
           </select>
         </>
+      ) : (
+        <div style={{ color: 'red', margin: '16px 0' }}>
+          No agents available. Please check your network connection or contact support.
+        </div>
       )}
       {!recording && <button onClick={startRecording}>🎤 Record</button>}
       {recording && <button onClick={stopRecording}>⏹️ Stop</button>}

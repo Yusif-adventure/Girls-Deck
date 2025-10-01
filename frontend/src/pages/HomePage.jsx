@@ -99,7 +99,12 @@ const HomePage = () => {
         </div>
         {loading && <div className="my-4">Getting your location...</div>}
         {error && <div className="alert alert-warning my-3">{error}</div>}
-        {nearestAgent && (
+        {locationAllowed === null && !loading && !error && (
+          <button className="btn btn-outline-primary mt-4" onClick={getLocation}>
+            Allow Location to Connect You to Help
+          </button>
+        )}
+        {locationAllowed && nearestAgent && (
           <div className="card border-0 shadow-sm mx-auto" style={{ maxWidth: 340 }}>
             <div className="card-body text-center">
               <img
@@ -126,10 +131,19 @@ const HomePage = () => {
             </div>
           </div>
         )}
-        {!loading && !nearestAgent && !error && (
-          <button className="btn btn-outline-primary mt-4" onClick={getLocation}>
-            Get My Location
-          </button>
+        {(locationAllowed !== null || error) && (
+          <div className="text-center mt-4">
+            <button className="btn btn-outline-secondary" onClick={() => setShowOther(v => !v)}>
+              {showOther ? 'Hide Other Options' : 'Other Options'}
+            </button>
+            {showOther && (
+              <div className="mt-3 d-flex flex-column gap-2 align-items-center">
+                <Link className="btn btn-outline-primary w-100" to="/form">Fill a Form</Link>
+                <Link className="btn btn-outline-primary w-100" to="/record">Send a Voice Message</Link>
+                <Link className="btn btn-outline-primary w-100" to="/contact">Contact Officers List</Link>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

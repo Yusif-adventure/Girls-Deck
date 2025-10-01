@@ -15,15 +15,16 @@ const RecordPage = () => {
   const mediaRecorderRef = useRef(null);
   const audioChunks = useRef([]);
 
-  const handleRegionBlur = async () => {
-    if (region) {
-  const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
-  const res = await fetch(`${apiBaseUrl}/api/agents?region=${region}`);
-  const data = await res.json();
-  setAgents(data.agents);
-  setSelectedAgent('');
-    }
-  };
+  // Always fetch all agents on mount
+  React.useEffect(() => {
+    const fetchAgents = async () => {
+      const apiBaseUrl = require('../apiBaseUrl').default ? require('../apiBaseUrl').default() : '';
+      const res = await fetch(`${apiBaseUrl}/api/agents`);
+      const data = await res.json();
+      setAgents(data.agents);
+    };
+    fetchAgents();
+  }, []);
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -70,12 +71,6 @@ const RecordPage = () => {
   return (
     <div className="record-page">
       <h2>Record Audio</h2>
-      <input
-        placeholder="Region"
-        value={region}
-        onChange={e => setRegion(e.target.value)}
-        onBlur={handleRegionBlur}
-      />
       {agents.length > 0 && (
         <>
           <label>Select Agent:</label>

@@ -1,3 +1,7 @@
+// Return all agents (for audio page agent select)
+app.get('/api/agents', (req, res) => {
+  res.json({ agents: agentsWithCoords });
+});
 // Uncomment and configure these for real transcription and messaging
 // const { SpeechClient } = require('@google-cloud/speech');
 // const speechClient = new SpeechClient({ keyFilename: 'path-to-google-credentials.json' });

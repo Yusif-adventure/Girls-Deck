@@ -191,38 +191,57 @@ const ContactPage = () => {
               {agents.length === 0 ? (
                 <div className="p-3 text-center text-muted">No officers found near your location.</div>
               ) : (
-                agents.map((agent, idx) => (
-                  <div
-                    key={agent.phone}
-                    className="p-3 border-bottom cursor-pointer hover-bg-light"
-                    onClick={() => handleAgentClick(agent)}
-                    style={{ cursor: 'pointer' }}
-                    onMouseEnter={e => e.target.style.backgroundColor = '#f8f9fa'}
-                    onMouseLeave={e => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    <div className="d-flex align-items-center">
-                      <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
-                        style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
-                        <img
-                          src={`https://randomuser.me/api/portraits/men/${(idx % 100) + 1}.jpg`}
-                          alt="Agent"
-                          style={{ width: '48px', height: '48px', objectFit: 'cover' }}
-                        />
-                      </div>
-                      <div className="flex-grow-1">
-                        <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{agent.name}</div>
-                        <div className="text-muted" style={{ fontSize: '11px' }}>
-                          {agent.place ? agent.place + ' • ' : ''}Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
+                agents.map((agent, idx) => {
+                  // Generate a realistic name for demo purposes
+                  const demoNames = [
+                    'James Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'John Jones',
+                    'Jennifer Garcia', 'Michael Miller', 'Linda Davis', 'William Rodriguez', 'Elizabeth Martinez',
+                    'David Hernandez', 'Barbara Lopez', 'Richard Gonzalez', 'Susan Wilson', 'Joseph Anderson',
+                    'Jessica Thomas', 'Thomas Taylor', 'Sarah Moore', 'Charles Jackson', 'Karen Martin'
+                  ];
+                  const demoPositions = [
+                    'Child Protection Officer', 'Social Worker', 'Family Support Officer', 'Child Rights Officer',
+                    'Community Liaison', 'Case Manager', 'Welfare Officer', 'Crisis Response Lead',
+                    'Youth Advocate', 'Protection Specialist', 'Field Coordinator', 'Support Counselor',
+                    'Legal Aid Officer', 'Helpline Agent', 'Safeguarding Lead', 'Community Outreach',
+                    'Victim Support', 'Rescue Coordinator', 'Child Safety Advocate', 'Family Liaison'
+                  ];
+                  const realName = demoNames[idx % demoNames.length];
+                  const realPosition = demoPositions[idx % demoPositions.length];
+                  return (
+                    <div
+                      key={agent.phone}
+                      className="p-3 border-bottom cursor-pointer hover-bg-light"
+                      onClick={() => handleAgentClick(agent)}
+                      style={{ cursor: 'pointer' }}
+                      onMouseEnter={e => e.target.style.backgroundColor = '#f8f9fa'}
+                      onMouseLeave={e => e.target.style.backgroundColor = 'transparent'}
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
+                          style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
+                          <img
+                            src={`https://randomuser.me/api/portraits/men/${(idx % 100) + 1}.jpg`}
+                            alt="Agent"
+                            style={{ width: '48px', height: '48px', objectFit: 'cover' }}
+                          />
                         </div>
-                        <div className="d-flex align-items-center mt-1">
-                          <span className="badge bg-success me-2" style={{ fontSize: '9px' }}>Online</span>
-                          <span className="text-muted" style={{ fontSize: '10px' }}>Response time: ~5 min</span>
+                        <div className="flex-grow-1">
+                          <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{realName}</div>
+                          <div className="text-muted" style={{ fontSize: '11px' }}>{realPosition}</div>
+                          <div className="text-muted" style={{ fontSize: '11px' }}>
+                            {agent.place ? agent.place + ' • ' : ''}Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
+                          </div>
+                          <div className="d-flex align-items-center mt-1">
+                            <span className="badge bg-success me-2" style={{ fontSize: '9px' }}>Online</span>
+                            <span className="text-muted" style={{ fontSize: '10px' }}>Response time: ~5 min</span>
+                          </div>
                         </div>
+                        <i className="bi bi-chevron-right text-muted"></i>
                       </div>
-                      <i className="bi bi-chevron-right text-muted"></i>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>
@@ -275,7 +294,31 @@ const ContactPage = () => {
                     style={{ width: '64px', height: '64px', objectFit: 'cover' }}
                   />
                 </div>
-                <h6 className="fw-bold mb-1">{selectedAgent.name}</h6>
+                <h6 className="fw-bold mb-1">{
+                  (() => {
+                    const demoNames = [
+                      'James Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'John Jones',
+                      'Jennifer Garcia', 'Michael Miller', 'Linda Davis', 'William Rodriguez', 'Elizabeth Martinez',
+                      'David Hernandez', 'Barbara Lopez', 'Richard Gonzalez', 'Susan Wilson', 'Joseph Anderson',
+                      'Jessica Thomas', 'Thomas Taylor', 'Sarah Moore', 'Charles Jackson', 'Karen Martin'
+                    ];
+                    const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
+                    return demoNames[idx % demoNames.length];
+                  })()
+                }</h6>
+                <div className="text-muted small mb-2">{
+                  (() => {
+                    const demoPositions = [
+                      'Child Protection Officer', 'Social Worker', 'Family Support Officer', 'Child Rights Officer',
+                      'Community Liaison', 'Case Manager', 'Welfare Officer', 'Crisis Response Lead',
+                      'Youth Advocate', 'Protection Specialist', 'Field Coordinator', 'Support Counselor',
+                      'Legal Aid Officer', 'Helpline Agent', 'Safeguarding Lead', 'Community Outreach',
+                      'Victim Support', 'Rescue Coordinator', 'Child Safety Advocate', 'Family Liaison'
+                    ];
+                    const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
+                    return demoPositions[idx % demoPositions.length];
+                  })()
+                }</div>
                 <p className="text-muted small mb-4">{selectedAgent.place ? selectedAgent.place : selectedAgent.region + ' Region'}</p>
                 <div className="d-grid gap-2">
                   <button 

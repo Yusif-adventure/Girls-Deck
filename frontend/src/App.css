@@ -1,17 +1,13 @@
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
+* {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
   margin: 0;
   padding: 0;
 }
-.app-container {
-  max-width: 500px;
-  margin: 40px auto;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 30px;
+
+body {
+  background: rgb(228, 228, 228);
+  width: 100%;
 }
 .main-menu {
   text-align: center;
@@ -45,19 +41,6 @@ input, textarea, select {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1em;
-}
-button {
-  background: #28a745;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 1em;
-  cursor: pointer;
-  margin-top: 10px;
-}
-button:hover {
-  background: #218838;
 }
 .success {
   color: #28a745;
@@ -96,4 +79,30 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+
+/* ------------------------------------------- */
+.form-container {
+  background: url('../assets/girl.webp');
+  background-position-x: 60%;
+  background-position-y: 60%;
+}
+.text-green {
+  color: green;
+}
+.text-red {
+  color: red;
+}
+.record-btn {
+  background-color: green;
+  color: white;
+  width: 40%;
+  font-size: 14px;
+}
+.send-btn {
+  background-color: green;
+  color: white;
+  font-size: 12px;
+  padding: 7px 0;
 }

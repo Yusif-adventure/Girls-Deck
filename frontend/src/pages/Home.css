@@ -1,12 +1,9 @@
 /* Home.css */
 
 .mobile-container {
-  max-width: 428px;
   margin: 0 auto;
-  background: white;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -289,3 +286,344 @@
     font-size: 16px;
   }
 }
+
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-div {
+  min-height: 100vh;
+}
+
+button {
+  padding: 6px 25px; 
+  border-radius: 6px !important;
+  border: none;
+}
+
+.btn-red {
+  background-color: rgb(243, 14, 14) !important;
+  color: white;
+}
+             
+.arrange {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 55vh;
+}
+
+
+.icon {
+  font-size: 24px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 15px;
+  transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+
+/* Hero Section */
+.hero-section {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-title {
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin-bottom: 40px;
+}
+
+.hero-subtitle {
+  color: #666;
+  font-weight: 300;
+}
+
+.window {
+  width: 50px;
+  height: 60px;
+  background: linear-gradient(180deg, #ff9933 0%, #ff7700 100%);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(255, 153, 51, 0.5);
+}
+
+.description {
+  margin-top: 40px;
+}
+
+.description p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.star {
+  font-size: 24px;
+}
+
+.rating-number {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.rating-text {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Booking Card */
+.booking-card {
+  background-color: green;
+  /* background-color: #2a2a2a; */
+  color: white;
+  padding: 18px 32px;
+  border-radius: 6px;
+  width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+.btn-option {
+  background-color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 6px 0;
+  color: black;
+  margin-bottom: 7px;
+  transition: all 0.4s ease;
+}
+.btn-option:hover {
+  background-color: black;
+  color: white;
+  transform: scale(1.05);
+}
+
+
+/* Responsive Design
+@media (max-width: 1200px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .hero-section {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .booking-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+
+  .book-now-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .main-content {
+    padding: 0 20px;
+    gap: 30px;
+  }
+
+  .hero-title {
+    font-size: 52px;
+  }
+
+  .cabin-preview {
+    margin: 30px 0;
+  }
+
+  .cabin-image {
+    width: 240px;
+  }
+
+  .cabin-roof {
+    height: 50px;
+  }
+
+  .cabin-body {
+    height: 100px;
+    padding: 15px;
+  }
+
+  .window {
+    width: 40px;
+    height: 50px;
+  }
+
+  .description p {
+    font-size: 15px;
+  }
+
+  .rating-number {
+    font-size: 24px;
+  }
+
+  .booking-card {
+    padding: 24px;
+    max-width: 100%;
+  }
+
+  .lodge-name {
+    font-size: 24px;
+  }
+
+  .date-selector,
+  .time-selector {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .amount {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .icon {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+  .main-content {
+    padding: 0 15px;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .cabin-image {
+    width: 200px;
+  }
+
+  .cabin-roof {
+    height: 40px;
+  }
+
+  .cabin-body {
+    height: 80px;
+    padding: 10px;
+  }
+
+  .window {
+    width: 35px;
+    height: 45px;
+  }
+
+  .description p {
+    font-size: 14px;
+  }
+
+  .rating {
+    flex-wrap: wrap;
+  }
+
+  .star {
+    font-size: 20px;
+  }
+
+  .rating-number {
+    font-size: 22px;
+  }
+
+  .rating-text {
+    font-size: 13px;
+  }
+
+  .booking-card {
+    padding: 20px;
+  }
+
+  .lodge-name {
+    font-size: 20px;
+  }
+
+  .date-input,
+  .time-input {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .price-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .amount {
+    font-size: 28px;
+  }
+
+  .reserve-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+} */

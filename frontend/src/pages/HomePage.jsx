@@ -180,7 +180,9 @@
 import React, { useEffect, useState } from 'react';
 import getApiBaseUrl from '../apiBaseUrl';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, MessageCircle, AlertTriangle, Loader2 } from 'lucide-react';
+import { MapPin, MessageCircle, AlertTriangle, Loader2, FileText, Mic, Phone, AlertCircle, ArrowRight, FolderMinus, Siren, Contact, FolderMinusIcon } from 'lucide-react';
+import './Home.css'; // Import the CSS file
+
 
 const HomePage = () => {
   const [locationAllowed, setLocationAllowed] = useState(null);
@@ -252,88 +254,187 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container-fluid bg-light d-flex flex-column min-vh-100" style={{ maxWidth: 428 }}>
-      {/* Header */}
-      <div className="bg-white shadow-sm border-bottom p-3 text-center">
-        <h2 className="fw-bold mb-1">Girls Deck</h2>
-        <div className="text-muted">Get help fast. Connect to a trained officer near you.</div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center p-3">
-        {/* Location Prompt */}
-        {locationAllowed === null && !loading && !error && (
-          <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
-            <MapPin size={40} className="mb-3 text-primary" />
-            <h5 className="mb-3">Allow location to connect you to the nearest help</h5>
-            <button className="btn btn-primary btn-lg" onClick={getLocation}>
-              Allow Location
-            </button>
+    <div className=''>
+      <div className="main-div container">
+        {/* Navigation */}
+        <nav className="d-flex align-items-center justify-content-between w-full pt-4">
+          <div>
+            <h1 className='fw-bold fs-2' style={{ color: 'green' }}>GirlsDeck</h1>
+            <p className="text-muted" style={{marginTop: '-10px', fontSize: '14px'}}>Get help fast. Connect to a trained officer near you.</p>
           </div>
-        )}
+          {/* <button className="btn-red">Call 999 Now</button> */}
+        </nav>
 
-        {/* Loading */}
-        {loading && (
-          <div className="d-flex flex-column align-items-center">
-            <Loader2 size={36} className="mb-3 text-primary spinner-border" />
-            <div>Finding the nearest officer...</div>
+        {/* Main Content */}
+        <div className="arrange mt-5">
+          <div className="hero-section mt-5">
+            {/* Location Prompt */}
+            {locationAllowed === null && !loading && !error && (
+              <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+                <MapPin size={40} className="mb-3 text-primary" />
+                <h5 className="mb-3">Allow location to connect you to the nearest help</h5>
+                <button className="btn btn-primary btn-lg" onClick={getLocation}>
+                  Allow Location
+                </button>
+              </div>
+            )}
+
+            {/* Loading */}
+            {loading && (
+              <div className="d-flex flex-column align-items-center">
+                <Loader2 size={36} className="mb-3 text-primary spinner-border" />
+                <div>Finding the nearest officer...</div>
+              </div>
+            )}
+
+            {/* Error */}
+            {error && (
+              <div className="card shadow-sm text-center p-4 border-0 bg-warning-subtle" style={{ borderRadius: 18, maxWidth: 370 }}>
+                <AlertTriangle size={32} className="mb-2 text-warning" />
+                <div className="mb-2 fw-semibold">{error}</div>
+                <div className="text-muted small">You can still use other options below.</div>
+              </div>
+            )}
+
+            {/* Agent Found */}
+            {locationAllowed && nearestAgent && !loading && !error && (
+              <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+                <img
+                  src="https://randomuser.me/api/portraits/men/1.jpg"
+                  alt="Agent"
+                  className="rounded-circle border mb-3"
+                  style={{ width: 80, height: 80, objectFit: 'cover' }}
+                />
+                <h4 className="fw-bold">{nearestAgent.name}</h4>
+                <p className="text-muted">{nearestAgent.place || place}</p>
+                <p>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
+                <div className="d-grid gap-2">
+                  <button className="btn btn-success btn-lg" onClick={handleCall}>
+                    <Phone size={18} className="me-2" /> Call Now
+                  </button>
+                  <button className="btn btn-primary btn-lg" onClick={() => handleChat('whatsapp')}>
+                    <MessageCircle size={18} className="me-2" /> Chat on WhatsApp
+                  </button>
+                  <button className="btn btn-info btn-lg text-white" onClick={() => handleChat('telegram')}>
+                    <MessageCircle size={18} className="me-2" /> Chat on Telegram
+                  </button>
+                </div>
+                <small className="text-muted d-block mt-2">Your privacy is protected. This is confidential.</small>
+              </div>
+            )}
           </div>
-        )}
 
-        {/* Error */}
-        {error && (
-          <div className="card shadow-sm text-center p-4 border-0 bg-warning-subtle" style={{ borderRadius: 18, maxWidth: 370 }}>
-            <AlertTriangle size={32} className="mb-2 text-warning" />
-            <div className="mb-2 fw-semibold">{error}</div>
-            <div className="text-muted small">You can still use other options below.</div>
-          </div>
-        )}
-
-        {/* Agent Found */}
-        {locationAllowed && nearestAgent && !loading && !error && (
-          <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
-            <img
-              src="https://randomuser.me/api/portraits/men/1.jpg"
-              alt="Agent"
-              className="rounded-circle border mb-3"
-              style={{ width: 80, height: 80, objectFit: 'cover' }}
-            />
-            <h4 className="fw-bold">{nearestAgent.name}</h4>
-            <p className="text-muted">{nearestAgent.place || place}</p>
-            <p>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
-            <div className="d-grid gap-2">
-              <button className="btn btn-success btn-lg" onClick={handleCall}>
-                <Phone size={18} className="me-2" /> Call Now
-              </button>
-              <button className="btn btn-primary btn-lg" onClick={() => handleChat('whatsapp')}>
-                <MessageCircle size={18} className="me-2" /> Chat on WhatsApp
-              </button>
-              <button className="btn btn-info btn-lg text-white" onClick={() => handleChat('telegram')}>
-                <MessageCircle size={18} className="me-2" /> Chat on Telegram
-              </button>
+          {/* Booking Card */}
+          <div className="row justify-content-end">
+            <div className="col-md-4 booking-card">
+              {/* Other Options */}
+              <div className=" p-3">
+                <p className="fw-bold ">Other ways to report:</p>
+                <div className="d-flex flex-column gap-2 text-center">
+                  <Link className="btn-option" to="/form"><FolderMinusIcon /> Fill a Form</Link>
+                  <Link className="btn-option" to="/record">🎤 Send a Voice Message</Link>
+                  <Link className="btn-option" to="/contact"><Contact/> Contact Officers List</Link>
+                </div>
+              </div>
             </div>
-            <small className="text-muted d-block mt-2">Your privacy is protected. This is confidential.</small>
           </div>
-        )}
-      </div>
-
-      {/* Other Options */}
-      <div className="text-center p-3">
-        <p className="text-muted mb-2">Other ways to report:</p>
-        <div className="d-flex flex-column gap-2">
-          <Link className="btn btn-outline-primary" to="/form">📝 Fill a Form</Link>
-          <Link className="btn btn-outline-primary" to="/record">🎤 Send a Voice Message</Link>
-          <Link className="btn btn-outline-primary" to="/contact">👥 Contact Officers List</Link>
         </div>
-      </div>
 
-      {/* Emergency Banner */}
-      <div className="bg-danger text-white text-center fw-bold p-3 sticky-bottom">
+
+      </div>
+      {/* Emergency banner*/}
+      <div className="bg-danger text-white text-center fw-bold p-3 bottom-0 right-0 left-0 w-100" style={{ position: 'fixed' }}>
         🚨 Immediate danger?{" "}
         <span className="text-decoration-underline" style={{ cursor: 'pointer' }} onClick={() => (window.location.href = 'tel:999')}>
           Call 999 now
         </span>.
       </div>
+
+
+      {/* <div className="container-fluid bg-light d-flex flex-column min-vh-100" style={{ maxWidth: 428 }}>
+        {/* Header *
+        <div className="bg-white shadow-sm border-bottom p-3 text-center">
+          <h2 className="fw-bold mb-1">Girls Deck</h2>
+          <div className="text-muted">Get help fast. Connect to a trained officer near you.</div>
+        </div>
+
+        {/* Main Content *
+        <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center p-3">
+          {/* Location Prompt *
+          {locationAllowed === null && !loading && !error && (
+            <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+              <MapPin size={40} className="mb-3 text-primary" />
+              <h5 className="mb-3">Allow location to connect you to the nearest help</h5>
+              <button className="btn btn-primary btn-lg" onClick={getLocation}>
+                Allow Location
+              </button>
+            </div>
+          )}
+
+          {/* Loading *
+          {loading && (
+            <div className="d-flex flex-column align-items-center">
+              <Loader2 size={36} className="mb-3 text-primary spinner-border" />
+              <div>Finding the nearest officer...</div>
+            </div>
+          )}
+
+          {/* Error *
+          {error && (
+            <div className="card shadow-sm text-center p-4 border-0 bg-warning-subtle" style={{ borderRadius: 18, maxWidth: 370 }}>
+              <AlertTriangle size={32} className="mb-2 text-warning" />
+              <div className="mb-2 fw-semibold">{error}</div>
+              <div className="text-muted small">You can still use other options below.</div>
+            </div>
+          )}
+
+          {/* Agent Found *
+          {locationAllowed && nearestAgent && !loading && !error && (
+            <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+              <img
+                src="https://randomuser.me/api/portraits/men/1.jpg"
+                alt="Agent"
+                className="rounded-circle border mb-3"
+                style={{ width: 80, height: 80, objectFit: 'cover' }}
+              />
+              <h4 className="fw-bold">{nearestAgent.name}</h4>
+              <p className="text-muted">{nearestAgent.place || place}</p>
+              <p>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
+              <div className="d-grid gap-2">
+                <button className="btn btn-success btn-lg" onClick={handleCall}>
+                  <Phone size={18} className="me-2" /> Call Now
+                </button>
+                <button className="btn btn-primary btn-lg" onClick={() => handleChat('whatsapp')}>
+                  <MessageCircle size={18} className="me-2" /> Chat on WhatsApp
+                </button>
+                <button className="btn btn-info btn-lg text-white" onClick={() => handleChat('telegram')}>
+                  <MessageCircle size={18} className="me-2" /> Chat on Telegram
+                </button>
+              </div>
+              <small className="text-muted d-block mt-2">Your privacy is protected. This is confidential.</small>
+            </div>
+          )}
+        </div>
+
+        {/* Other Options *
+        <div className="text-center p-3">
+          <p className="text-muted mb-2">Other ways to report:</p>
+          <div className="d-flex flex-column gap-2">
+            <Link className="btn btn-outline-primary" to="/form">📝 Fill a Form</Link>
+            <Link className="btn btn-outline-primary" to="/record">🎤 Send a Voice Message</Link>
+            <Link className="btn btn-outline-primary" to="/contact">👥 Contact Officers List</Link>
+          </div>
+        </div>
+
+        {/* Emergency Banner *
+        <div className="bg-danger text-white text-center fw-bold p-3 sticky-bottom">
+          🚨 Immediate danger?{" "}
+          <span className="text-decoration-underline" style={{ cursor: 'pointer' }} onClick={() => (window.location.href = 'tel:999')}>
+            Call 999 now
+          </span>.
+        </div>
+      </div> */}
+
     </div>
   );
 };

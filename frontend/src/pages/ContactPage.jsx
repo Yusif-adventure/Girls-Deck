@@ -86,7 +86,7 @@ const ContactPage = () => {
 
   return (
     <>
-      <div className='form-container' style={{ height: '100vh' }}>
+      <div className='form-container'>
         <div className='container'>
           <div className='row align-items-center px-md-0 px-4 py-md-4 py-4'>
             <div className='col-md-8 bg-white rounded align-items-center bg-primary h-100'>
@@ -191,7 +191,7 @@ const ContactPage = () => {
                       <h6 className="mb-1 fw-bold">Nearest Officers {place && (<span>in {place}</span>)}</h6>
                       <small className="text-muted">Tap to contact an officer immediately</small>
                     </div>
-                    <div className="card-body p-0">
+                    <div className="row g-4 card-body p-0">
                       {agents.length === 0 ? (
                         <div className="p-3 text-center text-muted">No officers found near your location.</div>
                       ) : (
@@ -224,7 +224,7 @@ const ContactPage = () => {
                           return (
                             <div
                               key={agent.phone}
-                              className="p-3 border-bottom cursor-pointer hover-bg-light"
+                              className="col-md-6 p-3 border-bottom cursor-pointer hover-bg-light"
                               onClick={() => handleAgentClick(agent)}
                               style={{ cursor: 'pointer' }}
                               onMouseEnter={e => e.target.style.backgroundColor = '#f8f9fa'}
@@ -294,94 +294,94 @@ const ContactPage = () => {
                 )}
               </div>
             </div>
-          </div>
 
-
-          {/* Modal */}
-          {showModal && selectedAgent && (
-            <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content border-0 shadow">
-                  <div className="modal-body p-4 text-center">
-                    <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
-                      style={{ width: '64px', height: '64px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
-                      <img
-                        src={`https://randomuser.me/api/portraits/men/${(agents.findIndex(a => a.phone === selectedAgent.phone) % 100) + 1}.jpg`}
-                        alt="Agent"
-                        style={{ width: '64px', height: '64px', objectFit: 'cover' }}
-                      />
-                    </div>
-                    <h6 className="fw-bold mb-1">{
-                      (() => {
-                        const demoNames = [
-                          'James Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'John Jones',
-                          'Jennifer Garcia', 'Michael Miller', 'Linda Davis', 'William Rodriguez', 'Elizabeth Martinez',
-                          'David Hernandez', 'Barbara Lopez', 'Richard Gonzalez', 'Susan Wilson', 'Joseph Anderson',
-                          'Jessica Thomas', 'Thomas Taylor', 'Sarah Moore', 'Charles Jackson', 'Karen Martin'
-                        ];
+            {/* Modal */}
+            {showModal && selectedAgent && (
+              <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content border-0 shadow">
+                    <div className="modal-body p-4 text-center">
+                      <div className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style={{ width: '64px', height: '64px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
+                        <img
+                          src={`https://randomuser.me/api/portraits/men/${(agents.findIndex(a => a.phone === selectedAgent.phone) % 100) + 1}.jpg`}
+                          alt="Agent"
+                          style={{ width: '64px', height: '64px', objectFit: 'cover' }}
+                        />
+                      </div>
+                      <h6 className="fw-bold mb-1">{
+                        (() => {
+                          const demoNames = [
+                            'James Smith', 'Mary Johnson', 'Robert Williams', 'Patricia Brown', 'John Jones',
+                            'Jennifer Garcia', 'Michael Miller', 'Linda Davis', 'William Rodriguez', 'Elizabeth Martinez',
+                            'David Hernandez', 'Barbara Lopez', 'Richard Gonzalez', 'Susan Wilson', 'Joseph Anderson',
+                            'Jessica Thomas', 'Thomas Taylor', 'Sarah Moore', 'Charles Jackson', 'Karen Martin'
+                          ];
+                          const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
+                          return demoNames[idx % demoNames.length];
+                        })()
+                      }</h6>
+                      <div className="text-muted small mb-2">{
+                        (() => {
+                          const demoPositions = [
+                            'Child Protection Officer', 'Social Worker', 'Family Support Officer', 'Child Rights Officer',
+                            'Community Liaison', 'Case Manager', 'Welfare Officer', 'Crisis Response Lead',
+                            'Youth Advocate', 'Protection Specialist', 'Field Coordinator', 'Support Counselor',
+                            'Legal Aid Officer', 'Helpline Agent', 'Safeguarding Lead', 'Community Outreach',
+                            'Victim Support', 'Rescue Coordinator', 'Child Safety Advocate', 'Family Liaison'
+                          ];
+                          const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
+                          return demoPositions[idx % demoPositions.length];
+                        })()
+                      }</div>
+                      <div>{(() => {
                         const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
-                        return demoNames[idx % demoNames.length];
-                      })()
-                    }</h6>
-                    <div className="text-muted small mb-2">{
-                      (() => {
-                        const demoPositions = [
-                          'Child Protection Officer', 'Social Worker', 'Family Support Officer', 'Child Rights Officer',
-                          'Community Liaison', 'Case Manager', 'Welfare Officer', 'Crisis Response Lead',
-                          'Youth Advocate', 'Protection Specialist', 'Field Coordinator', 'Support Counselor',
-                          'Legal Aid Officer', 'Helpline Agent', 'Safeguarding Lead', 'Community Outreach',
-                          'Victim Support', 'Rescue Coordinator', 'Child Safety Advocate', 'Family Liaison'
-                        ];
-                        const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
-                        return demoPositions[idx % demoPositions.length];
-                      })()
-                    }</div>
-                    <div>{(() => {
-                      const idx = agents.findIndex(a => a.phone === selectedAgent.phone);
-                      const starCount = 3 + (idx % 3);
-                      return Array.from({ length: 5 }, (_, i) =>
-                        i < starCount ? (
-                          <span key={i} style={{ color: '#fbbf24', fontSize: '16px' }}>&#9733;</span>
-                        ) : (
-                          <span key={i} style={{ color: '#e5e7eb', fontSize: '16px' }}>&#9733;</span>
-                        )
-                      );
-                    })()} <span className="text-muted" style={{ fontSize: '12px' }}>Success Rate</span></div>
-                    <p className="text-muted small mb-4">{selectedAgent.place ? selectedAgent.place : selectedAgent.region + ' Region'}</p>
-                    <div className="d-grid gap-2">
-                      <button
-                        className="btn btn-success d-flex align-items-center justify-content-center"
-                        onClick={handleCall}
-                      >
-                        <Phone size={18} className="me-2" />
-                        Call Officer
-                      </button>
-                      <button
-                        className="btn btn-primary d-flex align-items-center justify-content-center"
-                        onClick={() => handleChat('whatsapp')}
-                      >
-                        <i className="bi bi-whatsapp me-2"></i>
-                        WhatsApp
-                      </button>
-                      <button
-                        className="btn btn-info d-flex align-items-center justify-content-center"
-                        onClick={() => handleChat('telegram')}
-                      >
-                        <i className="bi bi-telegram me-2"></i>
-                        Telegram
-                      </button>
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Cancel
-                      </button>
+                        const starCount = 3 + (idx % 3);
+                        return Array.from({ length: 5 }, (_, i) =>
+                          i < starCount ? (
+                            <span key={i} style={{ color: '#fbbf24', fontSize: '16px' }}>&#9733;</span>
+                          ) : (
+                            <span key={i} style={{ color: '#e5e7eb', fontSize: '16px' }}>&#9733;</span>
+                          )
+                        );
+                      })()} <span className="text-muted" style={{ fontSize: '12px' }}>Success Rate</span></div>
+                      <p className="text-muted small mb-4">{selectedAgent.place ? selectedAgent.place : selectedAgent.region + ' Region'}</p>
+                      <div className="d-grid gap-2">
+                        <button
+                          className="btn btn-success d-flex align-items-center justify-content-center"
+                          onClick={handleCall}
+                        >
+                          <Phone size={18} className="me-2" />
+                          Call Officer
+                        </button>
+                        <button
+                          className="btn btn-primary d-flex align-items-center justify-content-center"
+                          onClick={() => handleChat('whatsapp')}
+                        >
+                          <i className="bi bi-whatsapp me-2"></i>
+                          WhatsApp
+                        </button>
+                        <button
+                          className="btn btn-info d-flex align-items-center justify-content-center"
+                          onClick={() => handleChat('telegram')}
+                        >
+                          <i className="bi bi-telegram me-2"></i>
+                          Telegram
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => setShowModal(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+
+          </div>
         </div>
       </div>
 

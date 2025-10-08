@@ -73,7 +73,7 @@ const RecordPage = () => {
 
   return (
     <>
-      <div className='form-container' style={{ height: '100vh' }}>
+      <div className='form-container'>
         <div className='container'>
           <div className='row align-items-center px-md-0 px-4 py-md-4 py-4'>
             <div className='col-md-5 bg-white rounded align-items-center bg-primary h-100'>
@@ -90,18 +90,18 @@ const RecordPage = () => {
 
               <div className="py-4">
                 <div className="record-page">
-                  <h2 className='fs-4'>Record Audio</h2>
+                  <h2 className='fs-5'>Record Audio</h2>
                   {agents.length > 0 ? (
                     <>
-                      <label>Select Agent:</label>
-                      <select value={selectedAgent ? selectedAgent.phone : ''} onChange={e => setSelectedAgent(agents.find(a => a.phone === e.target.value))} required>
+                      <label className='px-4' style={{marginBottom: '-14px'}}>Select Agent:</label>
+                      <select className='mx-4' value={selectedAgent ? selectedAgent.phone : ''} onChange={e => setSelectedAgent(agents.find(a => a.phone === e.target.value))} required>
                         <option value="">--Select Agent--</option>
                         {agents.map(agent => (
                           <option key={agent.phone} value={agent.phone}>{agent.name}</option>
                         ))}
                       </select>
-                      <label>Send via:</label>
-                      <select value={channel} onChange={e => setChannel(e.target.value)}>
+                      <label className='px-4' style={{marginBottom: '-14px'}}>Send via:</label>
+                      <select className='mx-4 mb-2' value={channel} onChange={e => setChannel(e.target.value)}>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
                       </select>
@@ -111,8 +111,9 @@ const RecordPage = () => {
                       No agents available. Please check your network connection or contact support.
                     </p>
                   )}
-                  {!recording && <button onClick={startRecording} className='record-btn mx-auto'>🎤 Record</button>}
-                  {recording && <button onClick={stopRecording} className='stop-btn'><StopCircle className='size-5' /> Stop</button>}
+                  {!recording && <button onClick={startRecording} className='record-btn mx-auto'>
+                    <i className="bi bi-mic"></i> Record</button>}
+                  {recording && <button onClick={stopRecording} className='stop-btn mx-auto'><StopCircle className='size-5' /> Stop</button>}
                   <div className='row align-items-center justify-content-between'>
                     <div className='col-md-8'>
                       {audioUrl && <audio src={audioUrl} controls />}
@@ -123,16 +124,16 @@ const RecordPage = () => {
                     </div>
                   </div>
                   {sent && (
-                    <div>
+                    <div className='px-2'>
                       <div>Audio sent to agent!</div>
-                      {transcription && (
+                      {/* {transcription && (
                         <div style={{ marginTop: 10 }}>
                           <strong>Transcription:</strong>
                           <div style={{ background: '#f3f4f6', padding: 8, borderRadius: 4, marginTop: 4 }}>{transcription}</div>
                         </div>
-                      )}
+                      )} */}
                       {sendResult && (
-                        <div style={{ marginTop: 10, color: '#16a34a' }}>{sendResult}</div>
+                        <div style={{ marginTop: 10, color: '#16a34a' }} className='fs-6 fw-bold'>{sendResult}</div>
                       )}
                     </div>
                   )}

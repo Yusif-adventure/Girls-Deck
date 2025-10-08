@@ -298,6 +298,7 @@
 
 .main-div {
   min-height: 100vh;
+  padding-bottom: 14vh;
 }
 
 button {
@@ -311,12 +312,6 @@ button {
   color: white;
 }
              
-.arrange {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 55vh;
-}
 
 
 .icon {

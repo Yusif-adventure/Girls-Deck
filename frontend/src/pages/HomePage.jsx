@@ -257,17 +257,16 @@ const HomePage = () => {
     <div className=''>
       <div className="main-div container">
         {/* Navigation */}
-        <nav className="d-flex align-items-center justify-content-between w-full pt-4">
+        <nav className="d-flex align-items-start justify-content-between w-full pt-4">
           <div>
             <h1 className='fw-bold fs-2' style={{ color: 'green' }}>GirlsDeck</h1>
-            <p className="text-muted" style={{marginTop: '-10px', fontSize: '14px'}}>Get help fast. Connect to a trained officer near you.</p>
+            <p className="text-muted" style={{ marginTop: '-10px', fontSize: '14px' }}>Get help fast. Connect to a trained officer near you.</p>
           </div>
-          {/* <button className="btn-red">Call 999 Now</button> */}
         </nav>
 
         {/* Main Content */}
-        <div className="arrange mt-5">
-          <div className="hero-section mt-5">
+        <div className="row g-4 mt-2 align-items-center justify-content-between">
+          <div className="col-md-6 hero-section">
             {/* Location Prompt */}
             {locationAllowed === null && !loading && !error && (
               <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
@@ -292,30 +291,30 @@ const HomePage = () => {
               <div className="card shadow-sm text-center p-4 border-0 bg-warning-subtle" style={{ borderRadius: 18, maxWidth: 370 }}>
                 <AlertTriangle size={32} className="mb-2 text-warning" />
                 <div className="mb-2 fw-semibold">{error}</div>
-                <div className="text-muted small">You can still use other options below.</div>
+                <div className="text-muted small">You can still use other options.</div>
               </div>
             )}
 
             {/* Agent Found */}
             {locationAllowed && nearestAgent && !loading && !error && (
-              <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+              <div className="card agent-card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
                 <img
                   src="https://randomuser.me/api/portraits/men/1.jpg"
                   alt="Agent"
                   className="rounded-circle border mb-3"
                   style={{ width: 80, height: 80, objectFit: 'cover' }}
                 />
-                <h4 className="fw-bold">{nearestAgent.name}</h4>
+                <h4 className="fw-bold fs-3" style={{marginBottom: '-5px'}}>{nearestAgent.name}</h4>
                 <p className="text-muted">{nearestAgent.place || place}</p>
-                <p>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
+                <p style={{fontSize: '14px'}}>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
                 <div className="d-grid gap-2">
-                  <button className="btn btn-success btn-lg" onClick={handleCall}>
+                  <button className="btn btn-success btn-lg fs-6" onClick={handleCall}>
                     <Phone size={18} className="me-2" /> Call Now
                   </button>
-                  <button className="btn btn-primary btn-lg" onClick={() => handleChat('whatsapp')}>
+                  <button className="btn btn-primary btn-lg fs-6" onClick={() => handleChat('whatsapp')}>
                     <MessageCircle size={18} className="me-2" /> Chat on WhatsApp
                   </button>
-                  <button className="btn btn-info btn-lg text-white" onClick={() => handleChat('telegram')}>
+                  <button className="btn btn-info btn-lg text-white fs-6" onClick={() => handleChat('telegram')}>
                     <MessageCircle size={18} className="me-2" /> Chat on Telegram
                   </button>
                 </div>
@@ -325,23 +324,24 @@ const HomePage = () => {
           </div>
 
           {/* Booking Card */}
-          <div className="row justify-content-end">
-            <div className="col-md-4 booking-card">
+          <div className="col-md-4 px-md-0 px-2">
+            <div className="booking-card">
               {/* Other Options */}
-              <div className=" p-3">
+              <div className="p-md-3 p-1">
                 <p className="fw-bold ">Other ways to report:</p>
                 <div className="d-flex flex-column gap-2 text-center">
-                  <Link className="btn-option" to="/form"><FolderMinusIcon /> Fill a Form</Link>
+                  <Link className="btn-option" to="/form">
+                    <i className="bi bi-card-list me-2"></i> Fill a Form</Link>
                   <Link className="btn-option" to="/record">🎤 Send a Voice Message</Link>
-                  <Link className="btn-option" to="/contact"><Contact/> Contact Officers List</Link>
+                  <Link className="btn-option" to="/contact"><Contact /> Contact Officers List</Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
+
+
       {/* Emergency banner*/}
       <div className="bg-danger text-white text-center fw-bold p-3 bottom-0 right-0 left-0 w-100" style={{ position: 'fixed' }}>
         🚨 Immediate danger?{" "}

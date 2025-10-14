@@ -401,7 +401,7 @@ button {
   color: white;
   padding: 18px 32px;
   border-radius: 6px;
-  width: 400px;
+  /* width: 400px; */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 .btn-option {
@@ -419,6 +419,9 @@ button {
   transform: scale(1.05);
 }
 
+.agent-card {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
 
 /* Responsive Design
 @media (max-width: 1200px) {

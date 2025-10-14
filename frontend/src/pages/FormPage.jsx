@@ -161,7 +161,7 @@ This is a child marriage report requiring immediate attention.`;
   return (
     <div className='form-container'>
       <div className='container'>
-        <div className='row align-items-center px-md-0 px-4 py-md-4 py-5'>
+        <div className='row align-items-center px-md-0 px-3 py-md-4 py-5'>
           <div className='col-md-6 col-12 bg-white rounded'>
             {/* Header */}
             <div className="bg-white border-bottom">

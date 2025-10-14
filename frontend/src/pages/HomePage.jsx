@@ -266,7 +266,7 @@ const HomePage = () => {
 
         {/* Main Content */}
         <div className="row g-4 mt-2 align-items-center justify-content-between">
-          <div className="col-md-6 hero-section">
+          <div className="col-md-6 col-12 hero-section">
             {/* Location Prompt */}
             {locationAllowed === null && !loading && !error && (
               <div className="card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
@@ -297,7 +297,7 @@ const HomePage = () => {
 
             {/* Agent Found */}
             {locationAllowed && nearestAgent && !loading && !error && (
-              <div className="card agent-card shadow-sm text-center p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
+              <div className="card agent-card text-center mx-md-0 mx-2 p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
                 <img
                   src="https://randomuser.me/api/portraits/men/1.jpg"
                   alt="Agent"
@@ -314,9 +314,9 @@ const HomePage = () => {
                   <button className="btn btn-primary btn-lg fs-6" onClick={() => handleChat('whatsapp')}>
                     <MessageCircle size={18} className="me-2" /> Chat on WhatsApp
                   </button>
-                  <button className="btn btn-info btn-lg text-white fs-6" onClick={() => handleChat('telegram')}>
+                  {/* <button className="btn btn-info btn-lg text-white fs-6" onClick={() => handleChat('telegram')}>
                     <MessageCircle size={18} className="me-2" /> Chat on Telegram
-                  </button>
+                  </button> */}
                 </div>
                 <small className="text-muted d-block mt-2">Your privacy is protected. This is confidential.</small>
               </div>
@@ -324,7 +324,7 @@ const HomePage = () => {
           </div>
 
           {/* Booking Card */}
-          <div className="col-md-4 px-md-0 px-2">
+          <div className="col-md-4 col-10 mx-auto px-md-0 px-2 mt-md-0 mt-5">
             <div className="booking-card">
               {/* Other Options */}
               <div className="p-md-3 p-1">
@@ -332,7 +332,7 @@ const HomePage = () => {
                 <div className="d-flex flex-column gap-2 text-center">
                   <Link className="btn-option" to="/form">
                     <i className="bi bi-card-list me-2"></i> Fill a Form</Link>
-                  <Link className="btn-option" to="/record">🎤 Send a Voice Message</Link>
+                  {/* <Link className="btn-option" to="/record">🎤 Send a Voice Message</Link> */}
                   <Link className="btn-option" to="/contact"><Contact /> Contact Officers List</Link>
                 </div>
               </div>

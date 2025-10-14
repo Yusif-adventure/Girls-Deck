@@ -88,7 +88,7 @@ const ContactPage = () => {
     <>
       <div className='form-container'>
         <div className='container'>
-          <div className='row align-items-center px-md-0 px-4 py-md-4 py-4'>
+          <div className='row align-items-center px-md-0 px-3 py-md-4 py-5'>
             <div className='col-md-8 bg-white rounded align-items-center bg-primary h-100'>
               {/* Header */}
               <div className="bg-white border-bottom">

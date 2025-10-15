@@ -260,7 +260,9 @@ const HomePage = () => {
         <nav className="d-flex align-items-start justify-content-between w-full pt-4">
           <div>
             <h1 className='fw-bold fs-2' style={{ color: 'green' }}>GirlsDeck</h1>
-            <p className="text-muted" style={{ marginTop: '-10px', fontSize: '14px' }}>Get help fast. Connect to a trained officer near you.</p>
+            {/* <p className="text-muted" style={{ marginTop: '-10px', fontSize: '14px' }}>Get help fast. Connect to a trained officer near you.</p> */}
+            <p className="" style={{ marginTop: '-10px', fontSize: '16px', fontWeight: 'bold', color: 'rgb(216, 26, 26)' }} >Report child marriage. Save a future.</p>
+            <p className="" style={{ marginTop: '-20px', fontSize: '16px', fontWeight: 'bold' }} >Speak up. Stop child marriage. Get help fast and safely.</p>
           </div>
         </nav>
 
@@ -306,7 +308,8 @@ const HomePage = () => {
                   style={{ width: 80, height: 80, objectFit: 'cover' }}
                 />
                 <h4 className="fw-bold fs-3" style={{marginBottom: '-5px'}}>{nearestAgent.name}</h4>
-                <p className="text-muted">{nearestAgent.place || place}</p>
+                <p className="text-muted">Accra</p>
+                {/* <p className="text-muted">{nearestAgent.place || place}</p> */}
                 <p style={{fontSize: '14px'}}>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
                 <div className="d-grid gap-2">
                   <button className="btn btn-success btn-lg fs-6" onClick={handleCall}>

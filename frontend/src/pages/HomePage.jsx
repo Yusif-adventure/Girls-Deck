@@ -299,7 +299,8 @@ const HomePage = () => {
             {locationAllowed && nearestAgent && !loading && !error && (
               <div className="card agent-card text-center mx-md-0 mx-2 p-4 border-0" style={{ borderRadius: 18, maxWidth: 370 }}>
                 <img
-                  src="https://randomuser.me/api/portraits/men/1.jpg"
+                  src="../../assets/man2.jpg"
+                  // src="https://randomuser.me/api/portraits/men/1.jpg"
                   alt="Agent"
                   className="rounded-circle border mb-3"
                   style={{ width: 80, height: 80, objectFit: 'cover' }}

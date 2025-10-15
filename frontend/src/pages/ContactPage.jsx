@@ -12,19 +12,20 @@ const ContactPage = () => {
   const [chatType, setChatType] = useState(null);
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
+
   // Mock agents data
   const mockAgents = {
     'Greater Accra': [
-      { id: 1, name: 'Sarah Mitchell - Child Protection Officer', phone: '+233244567890', whatsapp: '+233244567890', telegram: 'sarah_cpo', region: 'Greater Accra', status: 'online' },
-      { id: 2, name: 'John Asante - Social Worker', phone: '+233209876543', whatsapp: '+233209876543', telegram: 'john_sw', region: 'Greater Accra', status: 'online' }
+      { id: 1, name: 'Sarah Mitchell - Child Protection Officer', phone: '+233244567890', whatsapp: '+233244567890', telegram: 'sarah_cpo', region: 'Greater Accra', status: 'online', src: '../../assets/woman1.jpg' },
+      { id: 2, name: 'John Asante - Social Worker', phone: '+233209876543', whatsapp: '+233209876543', telegram: 'john_sw', region: 'Greater Accra', status: 'online', src: '../../assets/woman1.jpg'  }
     ],
     'Ashanti': [
-      { id: 3, name: 'Mary Osei - Child Protection Officer', phone: '+233244123456', whatsapp: '+233244123456', telegram: 'mary_cpo', region: 'Ashanti', status: 'online' },
-      { id: 4, name: 'Peter Yeboah - Family Support Officer', phone: '+233209123456', whatsapp: '+233209123456', telegram: 'peter_fso', region: 'Ashanti', status: 'offline' }
+      { id: 3, name: 'Mary Osei - Child Protection Officer', phone: '+233244123456', whatsapp: '+233244123456', telegram: 'mary_cpo', region: 'Ashanti', status: 'online', src: '../../assets/woman1.jpg'  },
+      { id: 4, name: 'Peter Yeboah - Family Support Officer', phone: '+233209123456', whatsapp: '+233209123456', telegram: 'peter_fso', region: 'Ashanti', status: 'offline', src: '../../assets/woman1.jpg'  }
     ],
     'Northern': [
-      { id: 5, name: 'Ibrahim Mohammed - Child Rights Officer', phone: '+233244654321', whatsapp: '+233244654321', telegram: 'ibrahim_cro', region: 'Northern', status: 'online' },
-      { id: 6, name: 'Fatima Abdul - Social Services Officer', phone: '+233209654321', whatsapp: '+233209654321', telegram: 'fatima_sso', region: 'Northern', status: 'online' }
+      { id: 5, name: 'Ibrahim Mohammed - Child Rights Officer', phone: '+233244654321', whatsapp: '+233244654321', telegram: 'ibrahim_cro', region: 'Northern', status: 'online', src: '../../assets/woman1.jpg'  },
+      { id: 6, name: 'Fatima Abdul - Social Services Officer', phone: '+233209654321', whatsapp: '+233209654321', telegram: 'fatima_sso', region: 'Northern', status: 'online', src: '../../assets/woman1.jpg'  }
     ]
   };
 
@@ -234,7 +235,8 @@ const ContactPage = () => {
                                 <div className="rounded-circle d-flex align-items-center justify-content-center me-3"
                                   style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)', overflow: 'hidden' }}>
                                   <img
-                                    src={`https://randomuser.me/api/portraits/men/${(idx % 100) + 1}.jpg`}
+                                    src={agent.src}
+                                    // src={`https://randomuser.me/api/portraits/men/${(idx % 100) + 1}.jpg`}
                                     alt="Agent"
                                     style={{ width: '48px', height: '48px', objectFit: 'cover' }}
                                   />
@@ -243,6 +245,7 @@ const ContactPage = () => {
                                   <div className="fw-medium small" style={{ lineHeight: '1.2' }}>{realName}</div>
                                   <div className="text-muted" style={{ fontSize: '11px' }}>{realPosition}</div>
                                   <div>{stars} <span className="text-muted" style={{ fontSize: '11px' }}>Success Rate</span></div>
+                                  <p>{agent.phone}</p>
                                   <div className="text-muted" style={{ fontSize: '11px' }}>
                                     {agent.place ? agent.place + ' • ' : ''}Distance: {agent.distance ? agent.distance.toFixed(2) : '?'} km
                                   </div>

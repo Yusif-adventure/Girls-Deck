@@ -396,7 +396,7 @@ button {
 
 /* Booking Card */
 .booking-card {
-  background-color: green;
+  background-color: rgb(49, 137, 49);
   /* background-color: #2a2a2a; */
   color: white;
   padding: 18px 32px;

@@ -61,10 +61,10 @@ app.get('/', (req, res) => {
 });
 
 const agentsWithCoords = [
-  { name: 'Agent A', phone: '+2331111111', whatsapp: '2331111111', telegram: 'agentA_telegram', lat: 5.6037, lng: -0.1870 }, // Accra
-  { name: 'Agent B', phone: '+2332222222', whatsapp: '2332222222', telegram: 'agentB_telegram', lat: 6.6885, lng: -1.6244 }, // Kumasi
-  { name: 'Agent C', phone: '+2333333333', whatsapp: '2333333333', telegram: 'agentC_telegram', lat: 9.4008, lng: -0.8393 }, // Tamale
-  { name: 'Agent D', phone: '+2334444444', whatsapp: '2334444444', telegram: 'agentD_telegram', lat: 7.5610, lng: -0.2554 }, // Koforidua
+  { name: 'Arthur Micheal', phone: '+2331111111', whatsapp: '2331111111', telegram: 'agentA_telegram', lat: 5.6037, lng: -0.1870 }, // Accra
+  { name: 'Evans Boateng', phone: '+2332222222', whatsapp: '2332222222', telegram: 'agentB_telegram', lat: 6.6885, lng: -1.6244 }, // Kumasi
+  { name: 'Mensah Eric', phone: '+2333333333', whatsapp: '2333333333', telegram: 'agentC_telegram', lat: 9.4008, lng: -0.8393 }, // Tamale
+  { name: 'Aboagye Daniel', phone: '+2334444444', whatsapp: '2334444444', telegram: 'agentD_telegram', lat: 7.5610, lng: -0.2554 }, // Koforidua
 ];
 
 // Return all agents (for audio page agent select)

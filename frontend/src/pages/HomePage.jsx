@@ -308,7 +308,7 @@ const HomePage = () => {
                   style={{ width: 80, height: 80, objectFit: 'cover' }}
                 />
                 <h4 className="fw-bold fs-3" style={{marginBottom: '-5px'}}>{nearestAgent.name}</h4>
-                <p className="text-muted">Accra</p>
+                <p className="text-muted">Nima</p>
                 {/* <p className="text-muted">{nearestAgent.place || place}</p> */}
                 <p style={{fontSize: '14px'}}>You’re about to connect with <b>{nearestAgent.name}</b>, a trained child protection officer.</p>
                 <div className="d-grid gap-2">

@@ -262,7 +262,7 @@ This is a child marriage report requiring immediate attention.`;
                     <div className="mb-4">
                       <label className="form-label text-dark fw-medium d-flex align-items-center">
                         <Phone size={16} className="me-2" />
-                        Contact Number (Optional)
+                        Contact Number (Optional) <span className='text-red'>*</span>
                       </label>
                       <input
                         type="tel"
